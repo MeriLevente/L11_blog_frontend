@@ -1,2 +1,17 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
-@import 'bootstrap-icons/font/bootstrap-icons.min.css'
+@import 'bootstrap-icons/font/bootstrap-icons.min.css';
+
+.header-bg{
+    background: url('../image/header-bg.png');
+    height: 15vw;
+    background-size: cover;
+    background-position: center center;
+}
+
+.header-title{
+    font-size: 8vw;
+    font-weight: bold;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 2px;
+    color: green;
+}
