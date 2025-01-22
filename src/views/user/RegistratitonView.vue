@@ -5,8 +5,7 @@
                 <h1 class="text-center display-4">Regisztráció</h1>
             </div>
         </div>
-    </div>
-    <div class="row" v-if="!regSuccess">
+        <div class="row" v-if="!regSuccess">
         <div class="col-12 col-md-4 mx-auto">
             <form @submit.prevent="onRegister">
                 <div class="form-floating mb-3">
@@ -43,13 +42,14 @@
                     </button>
                 </div>
             </form>
-        </div>
+        </div>  
     </div>
     <div class="row" v-else>
         <dic class="col-12 col-md-6 mx-auto text-center alert alert-success">
             A regisztráció sikeres!
         </dic>
     </div>
+</div>
 </template>
 
 <script setup lang="ts">
