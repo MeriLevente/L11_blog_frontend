@@ -20,9 +20,15 @@ export const useUserStore = defineStore('userStore', {
             return userservice.login(data)
                 .then((res) => {
                     this.status.loggedIn = true
+                    this.status.message = ""
                     this.user = res.data.data
                 })
-                .catch()
+                .catch((err)=>{
+                    this.status.loggedIn = false
+                    this.status.message = err.data.data.error
+                    this.user = {name: "", token: "", id: null, role: 0}
+                    return Promise.reject()
+                })
         },
     } 
 })

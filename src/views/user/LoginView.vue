@@ -21,6 +21,7 @@
                     </button>
                 </div>
                 </form>
+                <div v-if="status.message" class="alert alert-danger text-center mt-5">{{ status.message }}</div>
             </div>
         </div>
     </div>
@@ -29,9 +30,14 @@
 <script setup lang="ts">
     import { useUserStore } from '@/stores/userstore';
     import type LoginForm from '@/types/LoginForm';
+    import { storeToRefs } from 'pinia';
     import { ref } from 'vue';
+    import { useRouter } from 'vue-router';
 
     const { login } = useUserStore();
+    const { status } = storeToRefs(useUserStore())
+
+    const router = useRouter() //useRouter => navigálni tudunk, useRoute => az url-t le tudjuk kérni (pl. paraméterek lekérése)
 
     const loginForm = ref<LoginForm>({
         email: "",
@@ -40,6 +46,9 @@
 
     function onLogin(){
         login(loginForm.value)
+            .then(()=>{
+                router.push("/")
+            })
     }
 </script>
 
