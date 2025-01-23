@@ -22,6 +22,7 @@ export const useUserStore = defineStore('userStore', {
                     this.status.loggedIn = true
                     this.status.message = ""
                     this.user = res.data.data
+                    sessionStorage.setItem("user", JSON.stringify(this.user)) //csak stringet lehet tárolni
                 })
                 .catch((err)=>{
                     this.status.loggedIn = false
@@ -35,6 +36,7 @@ export const useUserStore = defineStore('userStore', {
                 .then(()=>{
                     this.status.loggedIn = false
                     this.user = {name: "", token: "", id: null, role: 0}
+                    sessionStorage.removeItem("user")
                 })
                 .catch(()=>{
                     this.status.loggedIn = false
