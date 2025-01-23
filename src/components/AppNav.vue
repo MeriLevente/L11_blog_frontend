@@ -11,35 +11,58 @@
 
           <div v-for="(menuItem, index) in menuItems" :key="index">
             <li class="nav-item">
-              <router-link class="nav-link" :to="menuItem.to">{{ menuItem.title }}</router-link>
+              <router-link class="nav-link" :to="menuItem.to" v-if="menuItem.isVisible">{{ menuItem.title }}</router-link>
             </li>
           </div>
-
+          <li class="nav-item" v-if="status.loggedIn">
+              <a class="nav-link" href="#" @click="onLoggOut">Kijelentkezés</a>
+          </li>
         </ul>
-
+        <div v-if="status.loggedIn">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <span class="nav-link">{{ user.name }}</span>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </nav>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { useUserStore } from '@/stores/userstore';
+import { storeToRefs } from 'pinia';
+import { computed, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
-    const menuItems = ref();
-    menuItems.value = [
+    const {logout} = useUserStore()
+    const { status, user } = storeToRefs(useUserStore())
+    const router = useRouter()
+    //const menuItems = ref();
+    const menuItems = computed(()=>{ //reaktív fgv, ha egyik eleme megváltozik újra lefut és a grafikai elemeket is újra lefuttatja (pl v-for-t)
+      return [
         {
             title: "Nyitó oldal",
-            to: '/'
+            to: '/',
+            isVisible: true
         },
         {
             title: "Regisztráció",
-            to: '/regisztracio'
+            to: '/regisztracio',
+            isVisible: !status.value.loggedIn
         },
         {
             title: "Bejelentkezés",
-            to: '/bejelentkezes'
+            to: '/bejelentkezes',
+            isVisible: !status.value.loggedIn
         },
     ]
+    })
+
+    function onLoggOut(){
+      logout().then(()=> router.push('/'))
+    }
 </script>
 
 <style scoped>

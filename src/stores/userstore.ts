@@ -30,5 +30,16 @@ export const useUserStore = defineStore('userStore', {
                     return Promise.reject()
                 })
         },
+        logout(){
+            return userservice.logout(this.user.token)
+                .then(()=>{
+                    this.status.loggedIn = false
+                    this.user = {name: "", token: "", id: null, role: 0}
+                })
+                .catch(()=>{
+                    this.status.loggedIn = false
+                    this.user = {name: "", token: "", id: null, role: 0}
+                })
+        }
     } 
 })
